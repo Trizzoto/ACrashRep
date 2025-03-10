@@ -24,9 +24,9 @@ export default function ClientLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light">
+        <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light">
           <div className="relative flex min-h-screen flex-col">
-            <header className="sticky top-0 z-50 w-full border-b bg-white">
+            <header className="sticky top-0 z-50 w-full border-b bg-[#F5F5F5] shadow-sm">
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -52,7 +52,7 @@ export default function ClientLayout({
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="font-bold text-xl tracking-tight"
+                    className="font-bold text-xl text-gray-900 tracking-tight"
                   >
                     Australian Crash Repairs
                   </motion.span>
@@ -68,21 +68,21 @@ export default function ClientLayout({
                       >
                         {item === "Services" ? (
                           <DropdownMenu>
-                            <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-primary">
+                            <DropdownMenuTrigger className="flex items-center gap-1 transition-all hover:text-primary">
                               Services <ChevronDown className="h-4 w-4" />
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="start" className="premium-card">
+                            <DropdownMenuContent align="start" className="animate-in slide-in-from-top-5">
                               <DropdownMenuItem asChild>
-                                <Link href="/services/panel-beating" className="hover:text-primary">Panel Beating</Link>
+                                <Link href="/services/panel-beating">Panel Beating</Link>
                               </DropdownMenuItem>
                               <DropdownMenuItem asChild>
-                                <Link href="/services/spray-painting" className="hover:text-primary">Spray Painting</Link>
+                                <Link href="/services/spray-painting">Spray Painting</Link>
                               </DropdownMenuItem>
                               <DropdownMenuItem asChild>
-                                <Link href="/services/luxury-repairs" className="hover:text-primary">Luxury Vehicle Repairs</Link>
+                                <Link href="/services/luxury-repairs">Luxury Vehicle Repairs</Link>
                               </DropdownMenuItem>
                               <DropdownMenuItem asChild>
-                                <Link href="/services/electric-vehicle" className="hover:text-primary">Electric Vehicle Repairs</Link>
+                                <Link href="/services/electric-vehicle">Electric Vehicle Repairs</Link>
                               </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
@@ -113,10 +113,17 @@ export default function ClientLayout({
                     <Phone className="h-4 w-4 text-primary transform group-hover:rotate-12 transition-transform duration-300" />
                     <span className="text-sm font-medium">(02) 9999 9999</span>
                   </div>
-                  <button className="premium-button">
-                    Request a Quote
-                  </button>
+                  <Button className="relative overflow-hidden group">
+                    <span className="relative z-10">Request a Quote</span>
+                    <motion.div
+                      className="absolute inset-0 bg-primary/20"
+                      initial={{ x: "-100%" }}
+                      whileHover={{ x: "100%" }}
+                      transition={{ duration: 0.6 }}
+                    />
+                  </Button>
                 </motion.div>
+                {/* Mobile menu button with animation */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -130,35 +137,35 @@ export default function ClientLayout({
                         <span className="sr-only">Toggle menu</span>
                       </Button>
                     </SheetTrigger>
-                    <SheetContent side="right" className="w-[300px] premium-card">
+                    <SheetContent side="right" className="w-[300px]">
                       <div className="flex flex-col space-y-6 mt-6">
-                        <Link href="/" className="text-lg font-medium hover:text-primary">
+                        <Link href="/" className="text-lg font-medium">
                           Home
                         </Link>
                         <div className="space-y-3">
                           <div className="font-medium text-lg">Services</div>
                           <div className="grid gap-2 pl-4">
-                            <Link href="/services/panel-beating" className="text-muted-foreground hover:text-primary">
+                            <Link href="/services/panel-beating" className="text-muted-foreground">
                               Panel Beating
                             </Link>
-                            <Link href="/services/spray-painting" className="text-muted-foreground hover:text-primary">
+                            <Link href="/services/spray-painting" className="text-muted-foreground">
                               Spray Painting
                             </Link>
-                            <Link href="/services/luxury-repairs" className="text-muted-foreground hover:text-primary">
+                            <Link href="/services/luxury-repairs" className="text-muted-foreground">
                               Luxury Vehicle Repairs
                             </Link>
-                            <Link href="/services/electric-vehicle" className="text-muted-foreground hover:text-primary">
+                            <Link href="/services/electric-vehicle" className="text-muted-foreground">
                               Electric Vehicle Repairs
                             </Link>
                           </div>
                         </div>
-                        <Link href="/gallery" className="text-lg font-medium hover:text-primary">
+                        <Link href="/gallery" className="text-lg font-medium">
                           Gallery
                         </Link>
-                        <Link href="/about" className="text-lg font-medium hover:text-primary">
+                        <Link href="/about" className="text-lg font-medium">
                           About
                         </Link>
-                        <Link href="/contact" className="text-lg font-medium hover:text-primary">
+                        <Link href="/contact" className="text-lg font-medium">
                           Contact
                         </Link>
                         <div className="border-t pt-4">
@@ -166,9 +173,7 @@ export default function ClientLayout({
                             <Phone className="h-4 w-4 text-primary" />
                             <span className="font-medium">(02) 9999 9999</span>
                           </div>
-                          <button className="premium-button w-full">
-                            Request a Quote
-                          </button>
+                          <Button className="w-full">Request a Quote</Button>
                         </div>
                       </div>
                     </SheetContent>
@@ -177,12 +182,12 @@ export default function ClientLayout({
               </motion.div>
             </header>
             {children}
-            <footer className="border-t bg-secondary">
+            <footer className="border-t bg-accent">
               <div className="container py-12 md:py-16">
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                   <div>
                     <div className="flex items-center gap-2 mb-4">
-                      <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                      <div className="h-8 w-8 rounded-full bmw-gradient flex items-center justify-center">
                         <span className="text-white font-bold text-sm">M</span>
                       </div>
                       <div className="font-bold text-xl">Australian Crash Repairs</div>
@@ -192,7 +197,7 @@ export default function ClientLayout({
                       MINI, and Alfa Romeo accredited.
                     </p>
                     <div className="flex space-x-4">
-                      <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                      <Link href="#" className="text-muted-foreground hover:text-foreground">
                         <span className="sr-only">Facebook</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +214,7 @@ export default function ClientLayout({
                           <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                         </svg>
                       </Link>
-                      <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                      <Link href="#" className="text-muted-foreground hover:text-foreground">
                         <span className="sr-only">Instagram</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -233,35 +238,41 @@ export default function ClientLayout({
                   <div>
                     <h3 className="font-bold mb-4">Quick Links</h3>
                     <div className="grid gap-2">
-                      {["Home", "Services", "Gallery", "About Us", "Contact"].map((item) => (
-                        <Link
-                          key={item}
-                          href={`/${item === "Home" ? "" : item.toLowerCase().replace(" ", "-")}`}
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                        >
-                          {item}
-                        </Link>
-                      ))}
+                      <Link href="/" className="text-muted-foreground hover:text-foreground">
+                        Home
+                      </Link>
+                      <Link href="/services" className="text-muted-foreground hover:text-foreground">
+                        Services
+                      </Link>
+                      <Link href="/gallery" className="text-muted-foreground hover:text-foreground">
+                        Gallery
+                      </Link>
+                      <Link href="/about" className="text-muted-foreground hover:text-foreground">
+                        About Us
+                      </Link>
+                      <Link href="/contact" className="text-muted-foreground hover:text-foreground">
+                        Contact
+                      </Link>
                     </div>
                   </div>
                   <div>
                     <h3 className="font-bold mb-4">Services</h3>
                     <div className="grid gap-2">
-                      {[
-                        ["Panel Beating", "panel-beating"],
-                        ["Spray Painting", "spray-painting"],
-                        ["Luxury Vehicle Repairs", "luxury-repairs"],
-                        ["Electric Vehicle Repairs", "electric-vehicle"],
-                        ["Insurance Work", "insurance"]
-                      ].map(([label, slug]) => (
-                        <Link
-                          key={slug}
-                          href={`/services/${slug}`}
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                        >
-                          {label}
-                        </Link>
-                      ))}
+                      <Link href="/services/panel-beating" className="text-muted-foreground hover:text-foreground">
+                        Panel Beating
+                      </Link>
+                      <Link href="/services/spray-painting" className="text-muted-foreground hover:text-foreground">
+                        Spray Painting
+                      </Link>
+                      <Link href="/services/luxury-repairs" className="text-muted-foreground hover:text-foreground">
+                        Luxury Vehicle Repairs
+                      </Link>
+                      <Link href="/services/electric-vehicle" className="text-muted-foreground hover:text-foreground">
+                        Electric Vehicle Repairs
+                      </Link>
+                      <Link href="/services/insurance" className="text-muted-foreground hover:text-foreground">
+                        Insurance Work
+                      </Link>
                     </div>
                   </div>
                   <div>
@@ -277,11 +288,11 @@ export default function ClientLayout({
                           Australia
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 text-muted-foreground group">
-                        <Phone className="h-5 w-5 text-primary group-hover:rotate-12 transition-transform duration-300" />
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Phone className="h-5 w-5 text-primary" />
                         (02) 9999 9999
                       </div>
-                      <div className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                      <div className="flex items-center gap-2 text-muted-foreground">
                         <Mail className="h-5 w-5 text-primary" />
                         info@australiancrashrepairs.com.au
                       </div>
@@ -292,11 +303,11 @@ export default function ClientLayout({
                   <p className="text-sm text-muted-foreground">
                     © {new Date().getFullYear()} Australian Crash Repairs. All rights reserved.
                   </p>
-                  <div className="flex gap-4 text-sm">
-                    <Link href="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
+                  <div className="flex gap-4 text-sm text-muted-foreground">
+                    <Link href="/privacy" className="hover:text-foreground">
                       Privacy Policy
                     </Link>
-                    <Link href="/terms" className="text-muted-foreground hover:text-primary transition-colors">
+                    <Link href="/terms" className="hover:text-foreground">
                       Terms of Service
                     </Link>
                   </div>

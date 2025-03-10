@@ -25,6 +25,28 @@
     --ring: 210 100% 35%;
     --radius: 0.5rem;
   }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 100% 45%; /* Brighter BMW Blue for dark mode */
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 85% 55%; /* Brighter BMW Red for dark mode */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
 }
 
 @layer base {
@@ -36,34 +58,64 @@
   }
 }
 
-.bmw-header {
+.bmw-gradient {
   background: linear-gradient(
     90deg,
-    rgb(0, 102, 177) 0% /* BMW Light Blue */,
-    rgb(0, 56, 147) 33% /* BMW Dark Blue */,
-    rgb(255, 0, 0) 66% /* BMW Red */,
-    rgb(64, 64, 64) 100% /* Grey */
+    rgb(0, 102, 177) 0%,
+    rgb(0, 56, 147) 33%,
+    rgb(255, 0, 0) 66%,
+    rgb(64, 64, 64) 100%
   );
 }
 
-/* Add new animations */
+.bmw-gradient-hover {
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    rgb(0, 102, 177) 0%,
+    rgb(0, 56, 147) 33%,
+    rgb(255, 0, 0) 66%,
+    rgb(64, 64, 64) 100%
+  );
+  background-size: 200% 100%;
+  transition: background-position 0.5s ease;
+}
+
+.bmw-gradient-hover:hover {
+  background-position: 100% 0;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-effect {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.premium-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.dark .premium-card {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 @keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 @keyframes shine {
-  from {
-    transform: translateX(-100%) rotate(45deg);
-  }
-  to {
-    transform: translateX(200%) rotate(45deg);
-  }
+  from { transform: translateX(-100%) rotate(45deg); }
+  to { transform: translateX(200%) rotate(45deg); }
 }
 
 .animate-float {
@@ -82,12 +134,57 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transform: rotate(45deg);
 }
 
 .shine-effect:hover::after {
   animation: shine 1.5s ease-in-out;
+}
+
+.bmw-button {
+  @apply relative overflow-hidden text-white font-bold py-2 px-6 rounded-md transition-all duration-300;
+  background: linear-gradient(90deg, rgb(0, 102, 177) 0%, rgb(0, 56, 147) 100%);
+}
+
+.bmw-button:hover {
+  background: linear-gradient(90deg, rgb(0, 56, 147) 0%, rgb(255, 0, 0) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 102, 177, 0.3);
+}
+
+.bmw-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(45deg);
+  transition: 0.5s;
+}
+
+.bmw-button:hover::after {
+  animation: shine 1.5s ease-in-out;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
 }
 
 /* Add smooth scroll behavior */
@@ -121,4 +218,5 @@ html {
 .button-premium:hover::after {
   @apply translate-x-0;
 }
+
 
